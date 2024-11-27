@@ -28,5 +28,32 @@ namespace Module08.Services
                 await _httpClient.GetFromJsonAsync<List<User>>($"{BaseUrl}get_user.php");
             return response ?? new List<User>();
         }
+
+        //Add User
+        public async Task<string>AddUserAsync(User user)
+        {
+            var response = 
+                await _httpClient.PostAsJsonAsync($"{BaseUrl}add_user.php", user);
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
+        }
+
+        //update User
+        public async Task<string> UpdateUserAsync(User user)
+        {
+            var response =
+                await _httpClient.PostAsJsonAsync($"{BaseUrl}update_user.php", user);
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
+        }
+
+        //Delete User
+        public async Task<string> DeleteUserAsync(User userId)
+        {
+            var response =
+                await _httpClient.PostAsJsonAsync($"{BaseUrl}delete_user.php", new {id = userId});
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
+        }
     }
 }

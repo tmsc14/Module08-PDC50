@@ -23,10 +23,23 @@
                             <Label Text=" | "/>
                             <Label Text="{Binding Gender}"/>
                         </StackLayout>
-
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <Label Text="Name"/>
+        <Entry Placeholder="Enter Name" Text="{Binding NameInput}"/>
+
+        <Label Text="Gender"/>
+        <Entry Placeholder="Enter Gender" Text="{Binding GenderInput}"/>
+
+        <Label Text="Name"/>
+        <Entry Placeholder="Enter Contact No" Text="{Binding ContactNoInput}"/>
+
+        <Button Text="Add User" Command="{Binding AddUserCommand}"/>
+        
+        <Button Text="Add User" Command="{Binding AddUserCommand}"/>
+
     </VerticalStackLayout>
 </ContentPage>
