@@ -41,5 +41,7 @@
         
         <Button Text="Delete User" Command="{Binding DeleteUserCommand}"/>
 
+        <Button Text="Update User" Command="{Binding UpdateUserCommand}"/>
+
     </VerticalStackLayout>
 </ContentPage>

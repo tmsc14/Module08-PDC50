@@ -22,6 +22,7 @@ namespace Module08.ViewModel
             {
                 _selectedUser = value;
                 OnPropertyChanged();
+                UpdateEntryField();
             }
         }
 
@@ -61,6 +62,27 @@ namespace Module08.ViewModel
             }
         }
 
+        private void ClearInput()
+        {
+            NameInput = string.Empty;
+            GenderInput = string.Empty;
+            ContactNoInput = string.Empty;
+        }
+
+        private void UpdateEntryField()
+        {
+            if (SelectedUser != null)
+            {
+                NameInput = SelectedUser.Name;
+                GenderInput = SelectedUser.Gender;
+                ContactNoInput = SelectedUser.ContactNo;
+            }
+            else
+            {
+                ClearInput();
+            }
+        }
+
         public UserViewModel() 
         {
             _userService = new UserService();
@@ -68,11 +90,26 @@ namespace Module08.ViewModel
             LoadUserCommand = new Command(async () => await LoadUsers());
             AddUserCommand = new Command(async () => await AddUser());
             DeleteUserCommand = new Command(async () => await DeleteUser());
+            UpdateUserCommand = new Command(async () => await UpdateUser());
         }
 
         public ICommand LoadUserCommand { get; }
         public ICommand AddUserCommand { get; }
         public ICommand DeleteUserCommand { get; }
+        public ICommand UpdateUserCommand { get; }
+
+        public async Task UpdateUser()
+        {
+            if (SelectedUser != null)
+            {
+                SelectedUser.Name = NameInput;
+                SelectedUser.Gender = GenderInput;
+                SelectedUser.ContactNo = ContactNoInput;
+
+                var result = await _userService.UpdateUserAsync(SelectedUser);
+                await LoadUsers();
+            }
+        }
 
         private async Task DeleteUser()
         {
