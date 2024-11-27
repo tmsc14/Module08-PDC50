@@ -3,45 +3,58 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Module08.View.UserPage"
              Title="UserPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="5">
 
-        <Button Text="Load Users" Command="{Binding LoadUserCommand}"/>
+            <Button Text="Load Users" 
+                    Command="{Binding LoadUserCommand}" 
+                    BackgroundColor="#89A8B2" 
+                    TextColor="White"/>
 
-        <ListView ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout
-                            Orientation="Horizontal" 
-                            Padding="10">
-                            <Label Text="{Binding Name}" 
-                                   FontAttributes="Bold"/>
-                            <Label Text=" | "/>
-                            <Label Text="{Binding Gender}"/>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            <ListView ItemsSource="{Binding Users}" 
+                      SelectedItem="{Binding SelectedUser}" 
+                      HeightRequest="300" 
+                      SeparatorVisibility="Default">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Padding="10">
+                                <Label Text="{Binding Name}" 
+                                       FontAttributes="Bold" 
+                                       VerticalOptions="Center"
+                                       TextColor="#1F1F1F"/>
+                                <Label Text=" | " VerticalOptions="Center"/>
+                                <Label Text="{Binding Gender}" VerticalOptions="Center"
+                                       TextColor="#1F1F1F"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
-        <Label Text="Name"/>
-        <Entry Placeholder="Enter Name" Text="{Binding NameInput}"/>
+            <Label Text="Name" FontAttributes="Bold" TextColor="#1F1F1F"/>
+            <Entry Placeholder="Enter Name" Text="{Binding NameInput}" />
 
-        <Label Text="Gender"/>
-        <Entry Placeholder="Enter Gender" Text="{Binding GenderInput}"/>
+            <Label Text="Gender" FontAttributes="Bold" TextColor="#1F1F1F"/>
+            <Entry Placeholder="Enter Gender" Text="{Binding GenderInput}" />
 
-        <Label Text="Contact No"/>
-        <Entry Placeholder="Enter Contact No" Text="{Binding ContactNoInput}"/>
+            <Label Text="Contact No" FontAttributes="Bold" TextColor="#1F1F1F"/>
+            <Entry Placeholder="Enter Contact No" Text="{Binding ContactNoInput}" />
 
-        <Button Text="Add User" Command="{Binding AddUserCommand}"/>
-        
-        <Button Text="Delete User" Command="{Binding DeleteUserCommand}"/>
+            <Button Text="Add User" 
+                    Command="{Binding AddUserCommand}" 
+                    BackgroundColor="#B3C8CF" 
+                    TextColor="#1F1F1F"/>
 
-        <Button Text="Update User" Command="{Binding UpdateUserCommand}"/>
+            <Button Text="Delete User" 
+                    Command="{Binding DeleteUserCommand}" 
+                    BackgroundColor="#E5E1DA" 
+                    TextColor="#1F1F1F"/>
 
-    </VerticalStackLayout>
+            <Button Text="Update User" 
+                    Command="{Binding UpdateUserCommand}" 
+                    BackgroundColor="#1F1F1F" 
+                    TextColor="#F1F0E8"/>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
