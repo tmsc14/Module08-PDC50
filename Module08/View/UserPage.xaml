@@ -11,7 +11,7 @@
 
         <Button Text="Load Users" Command="{Binding LoadUserCommand}"/>
 
-        <ListView ItemsSource="{Binding Users}">
+        <ListView ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -34,12 +34,12 @@
         <Label Text="Gender"/>
         <Entry Placeholder="Enter Gender" Text="{Binding GenderInput}"/>
 
-        <Label Text="Name"/>
+        <Label Text="Contact No"/>
         <Entry Placeholder="Enter Contact No" Text="{Binding ContactNoInput}"/>
 
         <Button Text="Add User" Command="{Binding AddUserCommand}"/>
         
-        <Button Text="Add User" Command="{Binding AddUserCommand}"/>
+        <Button Text="Delete User" Command="{Binding DeleteUserCommand}"/>
 
     </VerticalStackLayout>
 </ContentPage>

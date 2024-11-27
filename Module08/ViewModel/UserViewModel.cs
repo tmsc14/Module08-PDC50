@@ -14,6 +14,16 @@ namespace Module08.ViewModel
     {
         private readonly UserService _userService;
         public ObservableCollection<User> Users { get; set; }
+        private User _selectedUser;
+        public User SelectedUser
+        {
+            get => _selectedUser;
+            set
+            {
+                _selectedUser = value;
+                OnPropertyChanged();
+            }
+        }
 
         //Name
         private string _nameInput;
@@ -57,11 +67,21 @@ namespace Module08.ViewModel
             Users = new ObservableCollection<User>();
             LoadUserCommand = new Command(async () => await LoadUsers());
             AddUserCommand = new Command(async () => await AddUser());
+            DeleteUserCommand = new Command(async () => await DeleteUser());
         }
 
         public ICommand LoadUserCommand { get; }
         public ICommand AddUserCommand { get; }
+        public ICommand DeleteUserCommand { get; }
 
+        private async Task DeleteUser()
+        {
+            if (SelectedUser != null)
+            {
+                var result = await _userService.DeleteUserAsync(SelectedUser.Id);
+                await LoadUsers();
+            }
+        }
         private async Task LoadUsers()
         {
             var users = await _userService.GetUsersAsync();
