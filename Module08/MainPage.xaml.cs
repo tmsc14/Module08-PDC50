@@ -25,6 +25,11 @@
         {
             await Shell.Current.GoToAsync("//UserPage");
         }
-    }
+
+		private async void ClickedViewStudent(object sender, EventArgs e)
+		{
+			await Shell.Current.GoToAsync("//StudentListPage");
+		}
+	}
 
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Module08.View.StudentListPage"
+             Title="Student List">
+
+	<ScrollView Padding="20">
+		<VerticalStackLayout Spacing="5">
+			<Button Text="Load Students" 
+                    Command="{Binding LoadStudentsCommand}"
+                    BackgroundColor="#89A8B2"
+                    TextColor="White"/>
+
+			<ListView ItemsSource="{Binding Students}" 
+                     SelectedItem="{Binding SelectedStudent}"
+                     HeightRequest="500"
+                     SeparatorVisibility="Default">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<Frame Margin="2" Padding="10">
+								<Grid ColumnSpacing="10">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="Auto"/>
+										<ColumnDefinition Width="*"/>
+									</Grid.ColumnDefinitions>
+
+									<VerticalStackLayout Grid.Column="0">
+										<Label Text="{Binding StudentID}" 
+                                               FontAttributes="Bold"
+                                               TextColor="#1F1F1F"/>
+										<Label Text="{Binding GradeClass}"
+                                               TextColor="#1F1F1F"/>
+									</VerticalStackLayout>
+
+									<VerticalStackLayout Grid.Column="1">
+										<Label Text="{Binding FullName}" 
+                                               FontAttributes="Bold"
+                                               TextColor="#1F1F1F"/>
+										<Label Text="{Binding ContactNo}"
+                                               TextColor="#1F1F1F"/>
+									</VerticalStackLayout>
+								</Grid>
+							</Frame>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</VerticalStackLayout>
+	</ScrollView>
+</ContentPage>

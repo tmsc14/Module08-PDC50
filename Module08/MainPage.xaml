@@ -32,7 +32,9 @@
                 HorizontalOptions="Fill" />
 
             <Button Text="User Page" Clicked="ClickedViewUser"/>
-        </VerticalStackLayout>
+
+			<Button Text="Student Page" Clicked="ClickedViewStudent"/>
+		</VerticalStackLayout>
     </ScrollView>
 
 </ContentPage>
