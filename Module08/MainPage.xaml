@@ -24,6 +24,22 @@
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
 
+            <!-- Add Database Connection Test -->
+            <Button
+                x:Name="TestDbBtn"
+                Text="Test Database Connection"
+                SemanticProperties.Hint="Tests the connection to the database"
+                Clicked="OnTestDbConnection"
+                BackgroundColor="#89A8B2"
+                TextColor="White"
+                HorizontalOptions="Fill" />
+
+            <!-- Connection Status Label -->
+            <Label
+                x:Name="ConnectionStatus"
+                TextColor="Red"
+                HorizontalOptions="Center" />
+
             <Button
                 x:Name="CounterBtn"
                 Text="Click me" 
@@ -33,8 +49,8 @@
 
             <Button Text="User Page" Clicked="ClickedViewUser"/>
 
-			<Button Text="Student Page" Clicked="ClickedViewStudent"/>
-		</VerticalStackLayout>
+            <Button Text="Student Page" Clicked="ClickedViewStudent"/>
+        </VerticalStackLayout>
     </ScrollView>
 
 </ContentPage>
