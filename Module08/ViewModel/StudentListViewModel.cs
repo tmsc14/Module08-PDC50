@@ -10,44 +10,73 @@ using Microsoft.Maui.Controls;
 
 namespace Module08.ViewModel
 {
-	public class StudentListViewModel : BindableObject
-	{
-		private readonly StudentService _studentService;
-		private ObservableCollection<Student> _students;
+    public class StudentListViewModel : BindableObject
+    {
+        private readonly StudentService _studentService;
+        private ObservableCollection<Student> _students;
+        private string _errorMessage;
 
-		public ObservableCollection<Student> Students
-		{
-			get => _students;
-			set
-			{
-				_students = value;
-				OnPropertyChanged();
-			}
-		}
+        public ObservableCollection<Student> Students
+        {
+            get => _students;
+            set
+            {
+                _students = value;
+                OnPropertyChanged();
+            }
+        }
 
-		public ICommand LoadStudentsCommand { get; }
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged();
+            }
+        }
 
-		public StudentListViewModel()
-		{
-			_studentService = new StudentService();
-			Students = new ObservableCollection<Student>();
-			LoadStudentsCommand = new Command(async () => await LoadStudents());
-		}
+        public StudentListViewModel()
+        {
+            _studentService = new StudentService();
+            Students = new ObservableCollection<Student>();
+            LoadStudentsCommand = new Command(async () => await LoadStudents());
+        }
 
-		private async Task LoadStudents()
-		{
-			var students = await _studentService.GetStudentsAsync();
-			Students.Clear();
-			foreach (var student in students)
-			{
-				Students.Add(student);
-			}
-		}
+        public ICommand LoadStudentsCommand { get; }
 
-		public event PropertyChangedEventHandler PropertyChanged;
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
-	}
+        private async Task LoadStudents()
+        {
+            try
+            {
+                ErrorMessage = "Loading students...";
+                var students = await _studentService.GetStudentsAsync();
+
+                if (students == null || !students.Any())
+                {
+                    ErrorMessage = "No students found or error loading data";
+                    return;
+                }
+
+                Students.Clear();
+                foreach (var student in students)
+                {
+                    Students.Add(student);
+                }
+                ErrorMessage = $"Loaded {students.Count} students successfully";
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = $"Error: {ex.Message}";
+            }
+        }
+    
+
+    //public event PropertyChangedEventHandler PropertyChanged;
+    //protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    //{
+    //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    //}
+    //}
+    }
 }

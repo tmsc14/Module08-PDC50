@@ -4,48 +4,60 @@
              x:Class="Module08.View.StudentListPage"
              Title="Student List">
 
-	<ScrollView Padding="20">
-		<VerticalStackLayout Spacing="5">
-			<Button Text="Load Students" 
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="5">
+            <Button Text="Load Students" 
                     Command="{Binding LoadStudentsCommand}"
                     BackgroundColor="#89A8B2"
                     TextColor="White"/>
 
-			<ListView ItemsSource="{Binding Students}" 
+            <!-- Error Message Display -->
+            <Label Text="{Binding ErrorMessage}"
+                   TextColor="Red"
+                   Margin="0,10,0,10"
+                   FontSize="14"
+                   HorizontalOptions="Center"/>
+
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                             IsVisible="{Binding IsLoading}"
+                             Color="#89A8B2"
+                             HeightRequest="50"/>
+
+            <ListView ItemsSource="{Binding Students}" 
                      SelectedItem="{Binding SelectedStudent}"
                      HeightRequest="500"
                      SeparatorVisibility="Default">
-				<ListView.ItemTemplate>
-					<DataTemplate>
-						<ViewCell>
-							<Frame Margin="2" Padding="10">
-								<Grid ColumnSpacing="10">
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="Auto"/>
-										<ColumnDefinition Width="*"/>
-									</Grid.ColumnDefinitions>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Margin="2" Padding="10">
+                                <Grid ColumnSpacing="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-									<VerticalStackLayout Grid.Column="0">
-										<Label Text="{Binding StudentID}" 
+                                    <VerticalStackLayout Grid.Column="0">
+                                        <Label Text="{Binding StudentID}" 
                                                FontAttributes="Bold"
                                                TextColor="#1F1F1F"/>
-										<Label Text="{Binding GradeClass}"
+                                        <Label Text="{Binding GradeClass}"
                                                TextColor="#1F1F1F"/>
-									</VerticalStackLayout>
+                                    </VerticalStackLayout>
 
-									<VerticalStackLayout Grid.Column="1">
-										<Label Text="{Binding FullName}" 
+                                    <VerticalStackLayout Grid.Column="1">
+                                        <Label Text="{Binding FullName}" 
                                                FontAttributes="Bold"
                                                TextColor="#1F1F1F"/>
-										<Label Text="{Binding ContactNo}"
+                                        <Label Text="{Binding ContactNo}"
                                                TextColor="#1F1F1F"/>
-									</VerticalStackLayout>
-								</Grid>
-							</Frame>
-						</ViewCell>
-					</DataTemplate>
-				</ListView.ItemTemplate>
-			</ListView>
-		</VerticalStackLayout>
-	</ScrollView>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

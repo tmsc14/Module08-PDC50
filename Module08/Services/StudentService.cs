@@ -17,16 +17,21 @@ namespace Module08.Services
 			_httpClient = new HttpClient();
 		}
 
-		public async Task<List<Student>> GetStudentsAsync()
-		{
-			try
-			{
-				return await _httpClient.GetFromJsonAsync<List<Student>>($"{BaseUrl}get_students.php") ?? new List<Student>();
-			}
-			catch
-			{
-				return new List<Student>();
-			}
-		}
-	}
+        public async Task<List<Student>> GetStudentsAsync()
+        {
+            try
+            {
+                var response = await _httpClient.GetFromJsonAsync<List<Student>>($"{BaseUrl}get_students.php");
+                if (response != null)
+                {
+                    return response;
+                }
+                return new List<Student>();
+            }
+            catch (Exception)
+            {
+                return new List<Student>();
+            }
+        }
+    }
 }
