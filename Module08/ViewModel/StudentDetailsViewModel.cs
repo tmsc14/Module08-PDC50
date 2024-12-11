@@ -49,13 +49,21 @@ namespace Module08.ViewModel
             StudentGrades = new ObservableCollection<Grade>();
 
             GoBackCommand = new Command(async () => await GoBack());
-            AddGradeCommand = new Command(async () => await AddGrade());
+            AddGradeCommand = new Command(async () => await NavigateToAddGrade());
             RefreshGradesCommand = new Command(async () => await LoadGrades());
         }
 
         private async Task GoBack()
         {
             await Shell.Current.GoToAsync("..");
+        }
+
+        private async Task NavigateToAddGrade()
+        {
+            if (Student != null)
+            {
+                await Shell.Current.GoToAsync("AddGradePage?StudentId=" + Student.StudentID);
+            }
         }
 
         private async Task LoadGrades()
@@ -76,27 +84,6 @@ namespace Module08.ViewModel
                     await Application.Current.MainPage.DisplayAlert(
                         "Error",
                         $"Failed to load grades: {ex.Message}",
-                        "OK");
-                }
-            }
-        }
-
-        private async Task AddGrade()
-        {
-            if (Student != null)
-            {
-                try
-                {
-                    await Application.Current.MainPage.DisplayAlert(
-                        "Add Grade",
-                        "Grade addition will be implemented soon",
-                        "OK");
-                }
-                catch (Exception ex)
-                {
-                    await Application.Current.MainPage.DisplayAlert(
-                        "Error",
-                        $"Failed to add grade: {ex.Message}",
                         "OK");
                 }
             }

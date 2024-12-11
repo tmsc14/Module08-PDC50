@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Module08.View.AddGradePage"
+             Title="Add Grade">
+
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="15">
+            <Label Text="Add New Grade"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"/>
+
+            <Label Text="Subject" FontAttributes="Bold"/>
+            <Entry Text="{Binding Subject}" Placeholder="Enter subject"/>
+
+            <Label Text="Quarter" FontAttributes="Bold"/>
+            <Picker SelectedItem="{Binding Quarter}">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>1st Quarter</x:String>
+                        <x:String>2nd Quarter</x:String>
+                        <x:String>3rd Quarter</x:String>
+                        <x:String>4th Quarter</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <Label Text="Score" FontAttributes="Bold"/>
+            <Entry Text="{Binding Score}" Keyboard="Numeric" Placeholder="Enter score"/>
+
+            <Label Text="School Year" FontAttributes="Bold"/>
+            <Entry Text="{Binding SchoolYear}" Placeholder="Enter school year"/>
+
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button Text="Save"
+                        Command="{Binding SaveCommand}"
+                        BackgroundColor="#89A8B2"
+                        TextColor="White"
+                        WidthRequest="100"/>
+
+                <Button Text="Cancel"
+                        Command="{Binding CancelCommand}"
+                        BackgroundColor="#E5E1DA"
+                        TextColor="#1F1F1F"
+                        WidthRequest="100"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
