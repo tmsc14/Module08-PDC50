@@ -33,5 +33,38 @@ namespace Module08.Services
                 return new List<Student>();
             }
         }
+
+        public async Task<string> AddStudentAsync(Student student)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}add_student.php", new
+                {
+                    studentID = student.StudentID,
+                    fullName = student.FullName,
+                    gradeClass = student.GradeClass,
+                    contactNo = student.ContactNo,
+                    dateOfBirth = student.DateOfBirth,
+                    gender = student.Gender,
+                    address = student.Address,
+                    email = student.Email,
+                    emergencyContact = student.EmergencyContact,
+                    status = student.Status
+                });
+
+                return await response.Content.ReadAsStringAsync();
+            }
+            catch (Exception ex)
+            {
+                return $"Error: {ex.Message}";
+            }
+        }
+
+        public async Task<string> UpdateStudentAsync(Student student)
+        {
+            var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}update_student.php", student);
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
+        }
     }
 }

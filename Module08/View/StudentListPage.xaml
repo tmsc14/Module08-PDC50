@@ -5,33 +5,30 @@
              Title="Student List">
 
     <ScrollView Padding="20">
-        <VerticalStackLayout Spacing="5">
+        <VerticalStackLayout Spacing="10">
+            <!-- Top Section -->
             <Button Text="Load Students" 
                     Command="{Binding LoadStudentsCommand}"
                     BackgroundColor="#89A8B2"
-                    TextColor="White"/>
+                    TextColor="White"
+                    Margin="0,0,0,10"/>
 
-            <!-- Error Message Display -->
             <Label Text="{Binding ErrorMessage}"
                    TextColor="Red"
-                   Margin="0,10,0,10"
+                   Margin="0,0,0,10"
                    FontSize="14"
                    HorizontalOptions="Center"/>
 
-            <ActivityIndicator IsRunning="{Binding IsLoading}"
-                             IsVisible="{Binding IsLoading}"
-                             Color="#89A8B2"
-                             HeightRequest="50"/>
-
-            <ListView ItemsSource="{Binding Students}" 
-                     SelectedItem="{Binding SelectedStudent}"
-                     HeightRequest="500"
-                     SeparatorVisibility="Default">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Frame Margin="2" Padding="10">
-                                <Grid ColumnSpacing="10">
+            <!-- Student List -->
+            <Frame BorderColor="#89A8B2" Padding="10" Margin="0,0,0,20">
+                <ListView ItemsSource="{Binding Students}" 
+                         SelectedItem="{Binding SelectedStudent}"
+                         HeightRequest="200"
+                         SeparatorVisibility="Default">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Padding="10" ColumnSpacing="10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
@@ -53,11 +50,93 @@
                                                TextColor="#1F1F1F"/>
                                     </VerticalStackLayout>
                                 </Grid>
-                            </Frame>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+
+            <!-- Add Student Form -->
+            <Frame BorderColor="#B3C8CF" Padding="15" Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Add New Student" 
+                           FontSize="20" 
+                           FontAttributes="Bold" 
+                           TextColor="#1F1F1F"
+                           HorizontalOptions="Center"/>
+
+                    <Grid ColumnSpacing="10" RowSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <VerticalStackLayout Grid.Column="0" Spacing="5">
+                            <Label Text="Student ID" FontAttributes="Bold" TextColor="#1F1F1F"/>
+                            <Entry Placeholder="Enter Student ID" Text="{Binding StudentIdInput}" />
+
+                            <Label Text="Full Name" FontAttributes="Bold" TextColor="#1F1F1F"/>
+                            <Entry Placeholder="Enter Full Name" Text="{Binding FullNameInput}" />
+
+                            <Label Text="Grade/Class" FontAttributes="Bold" TextColor="#1F1F1F"/>
+                            <Entry Placeholder="Enter Grade/Class" Text="{Binding GradeClassInput}" />
+
+                            <Label Text="Contact No" FontAttributes="Bold" TextColor="#1F1F1F"/>
+                            <Entry Placeholder="Enter Contact No" Text="{Binding ContactNoInput}" />
+
+                            <Label Text="Date of Birth" FontAttributes="Bold" TextColor="#1F1F1F"/>
+                            <DatePicker Date="{Binding DateOfBirthInput}" 
+                            Format="yyyy-MM-dd"
+                            TextColor="#1F1F1F"/>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Column="1" Spacing="5">
+                            <Label Text="Gender" FontAttributes="Bold" TextColor="#1F1F1F"/>
+                            <Picker SelectedItem="{Binding GenderInput}"
+                                    TextColor="#1F1F1F">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>Male</x:String>
+                                        <x:String>Female</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+
+                            <Label Text="Address" FontAttributes="Bold" TextColor="#1F1F1F"/>
+                            <Entry Placeholder="Enter Address" Text="{Binding AddressInput}" />
+
+                            <Label Text="Email" FontAttributes="Bold" TextColor="#1F1F1F"/>
+                            <Entry Placeholder="Enter Email" Text="{Binding EmailInput}" />
+
+                            <Label Text="Emergency Contact" FontAttributes="Bold" TextColor="#1F1F1F"/>
+                            <Entry Placeholder="Enter Emergency Contact" Text="{Binding EmergencyContactInput}" />
+
+                            <Label Text="Status" FontAttributes="Bold" TextColor="#1F1F1F"/>
+                            <Picker SelectedItem="{Binding StatusInput}"
+                                    TextColor="#1F1F1F">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>Active</x:String>
+                                        <x:String>Inactive</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <Button Text="Add Student" 
+                            Command="{Binding AddStudentCommand}"
+                            BackgroundColor="#B3C8CF"
+                            TextColor="#1F1F1F"
+                            Margin="0,10,0,0"/>
+
+                    <Button Text="Update Student" 
+                            Command="{Binding UpdateStudentCommand}"
+                            BackgroundColor="#1F1F1F"
+                            TextColor="#F1F0E8"
+                            Margin="0,10,0,0"/>
+                </VerticalStackLayout>
+            </Frame>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
