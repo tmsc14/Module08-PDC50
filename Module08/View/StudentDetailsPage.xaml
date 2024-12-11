@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Module08.View.StudentDetailsPage"
+             Title="Student Details">
+
+    <ScrollView Padding="20">
+        <Frame BorderColor="#89A8B2" Padding="20">
+            <VerticalStackLayout Spacing="15">
+                <Label Text="Personal Information" 
+                   FontSize="24" 
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,10"/>
+
+                <Grid RowSpacing="15" ColumnSpacing="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Text="Student ID:" 
+                       Grid.Row="0" Grid.Column="0" 
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"/>
+                    <Label Text="{Binding Student.StudentID}" 
+                       Grid.Row="0" Grid.Column="1"
+                       VerticalOptions="Center"/>
+
+                    <Label Text="Full Name:" 
+                       Grid.Row="1" Grid.Column="0" 
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"/>
+                    <Label Text="{Binding Student.FullName}" 
+                       Grid.Row="1" Grid.Column="1"
+                       VerticalOptions="Center"/>
+
+                    <Label Text="Grade/Class:" 
+                       Grid.Row="2" Grid.Column="0" 
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"/>
+                    <Label Text="{Binding Student.GradeClass}" 
+                       Grid.Row="2" Grid.Column="1"
+                       VerticalOptions="Center"/>
+
+                    <Label Text="Date of Birth:" 
+                       Grid.Row="3" Grid.Column="0" 
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"/>
+                    <Label Text="{Binding Student.DateOfBirth}" 
+                       Grid.Row="3" Grid.Column="1"
+                       VerticalOptions="Center"/>
+
+                    <Label Text="Gender:" 
+                       Grid.Row="4" Grid.Column="0" 
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"/>
+                    <Label Text="{Binding Student.Gender}" 
+                       Grid.Row="4" Grid.Column="1"
+                       VerticalOptions="Center"/>
+
+                    <Label Text="Contact No:" 
+                       Grid.Row="5" Grid.Column="0" 
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"/>
+                    <Label Text="{Binding Student.ContactNo}" 
+                       Grid.Row="5" Grid.Column="1"
+                       VerticalOptions="Center"/>
+
+                    <Label Text="Email:" 
+                       Grid.Row="6" Grid.Column="0" 
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"/>
+                    <Label Text="{Binding Student.Email}" 
+                       Grid.Row="6" Grid.Column="1"
+                       VerticalOptions="Center"/>
+
+                    <Label Text="Address:" 
+                       Grid.Row="7" Grid.Column="0" 
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"/>
+                    <Label Text="{Binding Student.Address}" 
+                       Grid.Row="7" Grid.Column="1"
+                       VerticalOptions="Center"/>
+
+                    <Label Text="Emergency Contact:" 
+                       Grid.Row="8" Grid.Column="0" 
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"/>
+                    <Label Text="{Binding Student.EmergencyContact}" 
+                       Grid.Row="8" Grid.Column="1"
+                       VerticalOptions="Center"/>
+
+                    <Label Text="Status:" 
+                       Grid.Row="9" Grid.Column="0" 
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"/>
+                    <Label Text="{Binding Student.Status}" 
+                       Grid.Row="9" Grid.Column="1"
+                       VerticalOptions="Center"/>
+                </Grid>
+
+                <Button Text="Back to List"
+                    Command="{Binding GoBackCommand}"
+                    BackgroundColor="#89A8B2"
+                    TextColor="White"
+                    HeightRequest="40"
+                    Margin="0,20,0,0"/>
+            </VerticalStackLayout>
+        </Frame>
+    </ScrollView>
+</ContentPage>

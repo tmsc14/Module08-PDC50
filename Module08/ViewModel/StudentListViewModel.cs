@@ -180,12 +180,14 @@ namespace Module08.ViewModel
             AddStudentCommand = new Command(async () => await AddStudent());
             UpdateStudentCommand = new Command(async () => await UpdateStudent());
             DeleteStudentCommand = new Command(async () => await DeleteStudent());
+            ViewDetailsCommand = new Command<Student>(async (student) => await ViewDetails(student));
         }
 
         public ICommand LoadStudentsCommand { get; }
         public ICommand AddStudentCommand { get; }
         public ICommand UpdateStudentCommand { get; }
         public ICommand DeleteStudentCommand { get; }
+        public ICommand ViewDetailsCommand { get; }
 
         private async Task LoadStudents()
         {
@@ -329,6 +331,18 @@ namespace Module08.ViewModel
             else
             {
                 ClearInputs();
+            }
+        }
+
+        private async Task ViewDetails(Student student)
+        {
+            if (student != null)
+            {
+                await Shell.Current.GoToAsync($"StudentDetailsPage",
+                    new Dictionary<string, object>
+                    {
+                {"Student", student}
+                    });
             }
         }
     }

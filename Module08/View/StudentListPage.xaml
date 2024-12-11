@@ -28,10 +28,11 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid Padding="10" ColumnSpacing="10">
+                                <Grid ColumnSpacing="10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
                                     <VerticalStackLayout Grid.Column="0">
@@ -49,6 +50,19 @@
                                         <Label Text="{Binding ContactNo}"
                                                TextColor="#1F1F1F"/>
                                     </VerticalStackLayout>
+
+                                    <Button Grid.Column="2" 
+                                            Text="View Details"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ViewDetailsCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="#89A8B2"
+                                            TextColor="White"
+                                            FontSize="11"
+                                            WidthRequest="70"
+                                            HeightRequest="25"
+                                            Margin="0"
+                                            Padding="2"
+                                            Scale="0.9"/>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
