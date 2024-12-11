@@ -135,6 +135,12 @@
                             BackgroundColor="#1F1F1F"
                             TextColor="#F1F0E8"
                             Margin="0,10,0,0"/>
+
+                    <Button Text="Delete Student" 
+                            Command="{Binding DeleteStudentCommand}"
+                            BackgroundColor="#E5E1DA"
+                            TextColor="#1F1F1F"
+                            Margin="0,10,0,0"/>
                 </VerticalStackLayout>
             </Frame>
         </VerticalStackLayout>

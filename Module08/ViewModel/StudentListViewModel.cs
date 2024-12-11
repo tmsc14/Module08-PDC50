@@ -168,11 +168,13 @@ namespace Module08.ViewModel
             LoadStudentsCommand = new Command(async () => await LoadStudents());
             AddStudentCommand = new Command(async () => await AddStudent());
             UpdateStudentCommand = new Command(async () => await UpdateStudent());
+            DeleteStudentCommand = new Command(async () => await DeleteStudent());
         }
 
         public ICommand LoadStudentsCommand { get; }
         public ICommand AddStudentCommand { get; }
         public ICommand UpdateStudentCommand { get; }
+        public ICommand DeleteStudentCommand { get; }
 
         private async Task LoadStudents()
         {
@@ -274,6 +276,15 @@ namespace Module08.ViewModel
                 SelectedStudent.Status = StatusInput;
 
                 var result = await _studentService.UpdateStudentAsync(SelectedStudent);
+                await LoadStudents();
+            }
+        }
+
+        private async Task DeleteStudent()
+        {
+            if (SelectedStudent != null)
+            {
+                var result = await _studentService.DeleteStudentAsync(SelectedStudent.StudentID);
                 await LoadStudents();
             }
         }

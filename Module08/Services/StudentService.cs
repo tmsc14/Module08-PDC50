@@ -17,6 +17,8 @@ namespace Module08.Services
 			_httpClient = new HttpClient();
 		}
 
+
+        //Get
         public async Task<List<Student>> GetStudentsAsync()
         {
             try
@@ -34,6 +36,8 @@ namespace Module08.Services
             }
         }
 
+
+        //Add
         public async Task<string> AddStudentAsync(Student student)
         {
             try
@@ -60,9 +64,18 @@ namespace Module08.Services
             }
         }
 
+        //Update
         public async Task<string> UpdateStudentAsync(Student student)
         {
             var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}update_student.php", student);
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
+        }
+
+        //Delete
+        public async Task<string> DeleteStudentAsync(string studentId)
+        {
+            var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}delete_student.php", new { studentID = studentId });
             var result = await response.Content.ReadAsStringAsync();
             return result;
         }
