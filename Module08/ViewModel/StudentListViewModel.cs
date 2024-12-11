@@ -16,6 +16,7 @@ namespace Module08.ViewModel
         private ObservableCollection<Student> _students;
         private Student _selectedStudent;
         private string _errorMessage;
+        private string _statusMessage;
 
         // Input fields
         private string _studentIdInput;
@@ -56,6 +57,16 @@ namespace Module08.ViewModel
             set
             {
                 _errorMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            set
+            {
+                _statusMessage = value;
                 OnPropertyChanged();
             }
         }
@@ -206,23 +217,83 @@ namespace Module08.ViewModel
         {
             if (!string.IsNullOrWhiteSpace(StudentIdInput) && !string.IsNullOrWhiteSpace(FullNameInput))
             {
-                var newStudent = new Student
-                {
-                    StudentID = StudentIdInput,
-                    FullName = FullNameInput,
-                    GradeClass = GradeClassInput,
-                    ContactNo = ContactNoInput,
-                    DateOfBirth = DateOfBirthInput.ToString("yyyy-MM-dd"),
-                    Gender = GenderInput,
-                    Address = AddressInput,
-                    Email = EmailInput,
-                    EmergencyContact = EmergencyContactInput,
-                    Status = StatusInput
-                };
+                bool answer = await Application.Current.MainPage.DisplayAlert(
+                    "Confirm Add",
+                    $"Add student {FullNameInput}?",
+                    "Yes", "No");
 
-                var result = await _studentService.AddStudentAsync(newStudent);
-                await LoadStudents();
-                ClearInputs();
+                if (answer)
+                {
+                    var newStudent = new Student
+                    {
+                        StudentID = StudentIdInput,
+                        FullName = FullNameInput,
+                        GradeClass = GradeClassInput,
+                        ContactNo = ContactNoInput,
+                        DateOfBirth = DateOfBirthInput.ToString("yyyy-MM-dd"),
+                        Gender = GenderInput,
+                        Address = AddressInput,
+                        Email = EmailInput,
+                        EmergencyContact = EmergencyContactInput,
+                        Status = StatusInput
+                    };
+
+                    var result = await _studentService.AddStudentAsync(newStudent);
+                    await LoadStudents();
+                    ClearInputs();
+                    StatusMessage = $"Student {FullNameInput} added successfully";
+                    await Application.Current.MainPage.DisplayAlert("Success", $"Student {FullNameInput} has been added", "OK");
+                }
+            }
+        }
+
+        public async Task UpdateStudent()
+        {
+            if (SelectedStudent != null)
+            {
+                bool answer = await Application.Current.MainPage.DisplayAlert(
+                    "Confirm Update",
+                    $"Update details for student {FullNameInput}?",
+                    "Yes", "No");
+
+                if (answer)
+                {
+                    SelectedStudent.FullName = FullNameInput;
+                    SelectedStudent.GradeClass = GradeClassInput;
+                    SelectedStudent.ContactNo = ContactNoInput;
+                    SelectedStudent.DateOfBirth = DateOfBirthInput.ToString("yyyy-MM-dd");
+                    SelectedStudent.Gender = GenderInput;
+                    SelectedStudent.Address = AddressInput;
+                    SelectedStudent.Email = EmailInput;
+                    SelectedStudent.EmergencyContact = EmergencyContactInput;
+                    SelectedStudent.Status = StatusInput;
+
+                    var result = await _studentService.UpdateStudentAsync(SelectedStudent);
+                    await LoadStudents();
+                    StatusMessage = $"Student {FullNameInput} updated successfully";
+                    await Application.Current.MainPage.DisplayAlert("Success", $"Student {FullNameInput} has been updated", "OK");
+                    ClearInputs();
+                }
+            }
+        }
+
+        private async Task DeleteStudent()
+        {
+            if (SelectedStudent != null)
+            {
+                bool answer = await Application.Current.MainPage.DisplayAlert(
+                    "Confirm Delete",
+                    $"Are you sure you want to delete student {SelectedStudent.FullName}?",
+                    "Yes", "No");
+
+                if (answer)
+                {
+                    var result = await _studentService.DeleteStudentAsync(SelectedStudent.StudentID);
+                    await LoadStudents();
+                    ClearInputs();
+                    StatusMessage = $"Student {SelectedStudent.FullName} deleted successfully";
+                    await Application.Current.MainPage.DisplayAlert("Success", "Student has been deleted", "OK");
+                }
             }
         }
 
@@ -258,34 +329,6 @@ namespace Module08.ViewModel
             else
             {
                 ClearInputs();
-            }
-        }
-
-        public async Task UpdateStudent()
-        {
-            if (SelectedStudent != null)
-            {
-                SelectedStudent.FullName = FullNameInput;
-                SelectedStudent.GradeClass = GradeClassInput;
-                SelectedStudent.ContactNo = ContactNoInput;
-                SelectedStudent.DateOfBirth = DateOfBirthInput.ToString("yyyy-MM-dd");
-                SelectedStudent.Gender = GenderInput;
-                SelectedStudent.Address = AddressInput;
-                SelectedStudent.Email = EmailInput;
-                SelectedStudent.EmergencyContact = EmergencyContactInput;
-                SelectedStudent.Status = StatusInput;
-
-                var result = await _studentService.UpdateStudentAsync(SelectedStudent);
-                await LoadStudents();
-            }
-        }
-
-        private async Task DeleteStudent()
-        {
-            if (SelectedStudent != null)
-            {
-                var result = await _studentService.DeleteStudentAsync(SelectedStudent.StudentID);
-                await LoadStudents();
             }
         }
     }
