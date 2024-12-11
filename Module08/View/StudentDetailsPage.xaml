@@ -117,54 +117,107 @@
             </Frame>
 
             <!-- Academic Information Section -->
-            <Frame BorderColor="#89A8B2" Padding="20">
+            <Frame BorderColor="#89A8B2" Padding="20" Margin="0,20,0,0">
                 <VerticalStackLayout Spacing="15">
                     <Label Text="Academic Information" 
-                           FontSize="24" 
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"/>
+               FontSize="24" 
+               FontAttributes="Bold"
+               HorizontalOptions="Center"/>
 
-                    <Grid ColumnDefinitions="*,*,*,*" 
-                          RowSpacing="10" 
-                          Padding="5">
-                        <Label Text="Subject" 
-                               Grid.Column="0" 
-                               FontAttributes="Bold"/>
-                        <Label Text="Quarter" 
-                               Grid.Column="1" 
-                               FontAttributes="Bold"/>
-                        <Label Text="Score" 
-                               Grid.Column="2" 
-                               FontAttributes="Bold"/>
-                        <Label Text="School Year" 
-                               Grid.Column="3" 
-                               FontAttributes="Bold"/>
+                    <HorizontalStackLayout Spacing="5" HorizontalOptions="Start">
+                        <Label Text="GPA:" 
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"/>
+                        <Label Text="{Binding GPA}" 
+                   FontSize="18"
+                   VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Label Text="{Binding GradeSummary}" 
+               FontSize="16"
+               HorizontalOptions="Start"/>
+
+                    <Grid ColumnDefinitions="300,270,270,100,Auto,Auto" 
+              Padding="5"
+              ColumnSpacing="10">
+                        <Label Text="Subject" Grid.Column="0" FontAttributes="Bold" HorizontalTextAlignment="Start"/>
+                        <Label Text="Quarter" Grid.Column="1" FontAttributes="Bold" HorizontalTextAlignment="Start"/>
+                        <Label Text="Score" Grid.Column="2" FontAttributes="Bold" HorizontalTextAlignment="Start"/>
+                        <Label Text="School Year" Grid.Column="3" FontAttributes="Bold" HorizontalTextAlignment="Start"/>
+                        <Label Text="" Grid.ColumnSpan="2"/>
+                        <!-- Spacer for buttons -->
                     </Grid>
 
                     <CollectionView ItemsSource="{Binding StudentGrades}"
-                                  HeightRequest="200">
+                        HeightRequest="200"
+                        Margin="10,0,10,0">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Grid ColumnDefinitions="*,*,*,*" 
-                                      Padding="5">
+                                <Grid ColumnDefinitions="*,*,*,*,Auto,Auto"
+                          Padding="5"
+                          ColumnSpacing="10">
+
+                                    <!-- Subject -->
                                     <Label Text="{Binding Subject}" 
-                                           Grid.Column="0"/>
+                               Grid.Column="0"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Center"/>
+
+                                    <!-- Quarter -->
                                     <Label Text="{Binding Quarter}" 
-                                           Grid.Column="1"/>
+                               Grid.Column="1"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Center"/>
+
+                                    <!-- Score -->
                                     <Label Text="{Binding Score}" 
-                                           Grid.Column="2"/>
+                               Grid.Column="2"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Center"/>
+
+                                    <!-- School Year -->
                                     <Label Text="{Binding SchoolYear}" 
-                                           Grid.Column="3"/>
+                               Grid.Column="3"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Center"/>
+
+                                    <!-- Edit Button -->
+                                    <Button Text="Edit"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditGradeCommand}"
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="#89A8B2"
+                                TextColor="#FFFFFF"
+                                FontSize="11"
+                                WidthRequest="70"
+                                HeightRequest="30"
+                                CornerRadius="5"
+                                Grid.Column="4"/>
+
+                                    <!-- Delete Button -->
+                                    <Button Text="Delete"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteGradeCommand}"
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="#E5E1DA"
+                                TextColor="#1F1F1F"
+                                FontSize="11"
+                                WidthRequest="70"
+                                HeightRequest="30"
+                                CornerRadius="5"
+                                Grid.Column="5"/>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
 
+                    <!-- Add Grade Button -->
                     <Button Text="Add Grade"
-                            Command="{Binding AddGradeCommand}"
-                            BackgroundColor="#89A8B2"
-                            TextColor="White"
-                            HeightRequest="40"/>
+                Command="{Binding AddGradeCommand}"
+                BackgroundColor="#89A8B2"
+                TextColor="#FFFFFF"
+                FontSize="14"
+                WidthRequest="150"
+                HeightRequest="40"
+                CornerRadius="10"/>
                 </VerticalStackLayout>
             </Frame>
 

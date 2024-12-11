@@ -11,6 +11,7 @@ namespace Module08
             InitializeComponent();
             Routing.RegisterRoute(nameof(StudentDetailsPage), typeof(StudentDetailsPage));
             Routing.RegisterRoute(nameof(AddGradePage), typeof(AddGradePage));
+            Routing.RegisterRoute(nameof(EditGradePage), typeof(EditGradePage));
         }
     }
 }
