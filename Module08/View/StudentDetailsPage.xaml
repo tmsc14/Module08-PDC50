@@ -137,6 +137,39 @@
                FontSize="16"
                HorizontalOptions="Start"/>
 
+                    <!-- Sort and Filter Controls -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="15" Margin="0,10,0,10">
+                        <HorizontalStackLayout Grid.Column="0" Spacing="10">
+                            <Label Text="Sort by:" 
+               VerticalOptions="Center"
+               FontAttributes="Bold"/>
+                            <Picker SelectedItem="{Binding SortBy}"
+                WidthRequest="120">
+                                <Picker.Items>
+                                    <x:String>Score</x:String>
+                                    <x:String>Quarter</x:String>
+                                    <x:String>Subject</x:String>
+                                </Picker.Items>
+                            </Picker>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Grid.Column="1" Spacing="10">
+                            <Label Text="Filter by:" 
+               VerticalOptions="Center"
+               FontAttributes="Bold"/>
+                            <Picker SelectedItem="{Binding FilterBy}"
+                WidthRequest="120">
+                                <Picker.Items>
+                                    <x:String>Quarter</x:String>
+                                    <x:String>Subject</x:String>
+                                </Picker.Items>
+                            </Picker>
+                            <Entry Placeholder="Enter value"
+               Text="{Binding FilterValue}"
+               WidthRequest="120"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+
                     <Grid ColumnDefinitions="300,270,270,100,Auto,Auto" 
               Padding="5"
               ColumnSpacing="10">
@@ -144,8 +177,6 @@
                         <Label Text="Quarter" Grid.Column="1" FontAttributes="Bold" HorizontalTextAlignment="Start"/>
                         <Label Text="Score" Grid.Column="2" FontAttributes="Bold" HorizontalTextAlignment="Start"/>
                         <Label Text="School Year" Grid.Column="3" FontAttributes="Bold" HorizontalTextAlignment="Start"/>
-                        <Label Text="" Grid.ColumnSpan="2"/>
-                        <!-- Spacer for buttons -->
                     </Grid>
 
                     <CollectionView ItemsSource="{Binding StudentGrades}"
@@ -153,35 +184,25 @@
                         Margin="10,0,10,0">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Grid ColumnDefinitions="*,*,*,*,Auto,Auto"
+                                <Grid ColumnDefinitions="300,270,270,100,Auto,Auto"
                           Padding="5"
                           ColumnSpacing="10">
-
-                                    <!-- Subject -->
                                     <Label Text="{Binding Subject}" 
                                Grid.Column="0"
                                HorizontalOptions="Start"
                                VerticalOptions="Center"/>
-
-                                    <!-- Quarter -->
                                     <Label Text="{Binding Quarter}" 
                                Grid.Column="1"
                                HorizontalOptions="Start"
                                VerticalOptions="Center"/>
-
-                                    <!-- Score -->
                                     <Label Text="{Binding Score}" 
                                Grid.Column="2"
                                HorizontalOptions="Start"
                                VerticalOptions="Center"/>
-
-                                    <!-- School Year -->
                                     <Label Text="{Binding SchoolYear}" 
                                Grid.Column="3"
                                HorizontalOptions="Start"
                                VerticalOptions="Center"/>
-
-                                    <!-- Edit Button -->
                                     <Button Text="Edit"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditGradeCommand}"
                                 CommandParameter="{Binding .}"
@@ -192,8 +213,6 @@
                                 HeightRequest="30"
                                 CornerRadius="5"
                                 Grid.Column="4"/>
-
-                                    <!-- Delete Button -->
                                     <Button Text="Delete"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteGradeCommand}"
                                 CommandParameter="{Binding .}"
@@ -209,7 +228,6 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
 
-                    <!-- Add Grade Button -->
                     <Button Text="Add Grade"
                 Command="{Binding AddGradeCommand}"
                 BackgroundColor="#89A8B2"

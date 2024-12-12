@@ -19,6 +19,9 @@ namespace Module08.ViewModel
         private readonly GradeService _gradeService;
         private decimal _gpa;
         private string _gradeSummary;
+        private string _sortBy;
+        private string _filterBy;
+        private string _filterValue;
 
         public Student Student
         {
@@ -28,6 +31,39 @@ namespace Module08.ViewModel
                 _student = value;
                 OnPropertyChanged();
                 LoadGrades();
+            }
+        }
+
+        public string SortBy
+        {
+            get => _sortBy;
+            set
+            {
+                _sortBy = value;
+                SortGrades();
+                OnPropertyChanged();
+            }
+        }
+
+        public string FilterBy
+        {
+            get => _filterBy;
+            set
+            {
+                _filterBy = value;
+                ApplyFilter();
+                OnPropertyChanged();
+            }
+        }
+
+        public string FilterValue
+        {
+            get => _filterValue;
+            set
+            {
+                _filterValue = value;
+                ApplyFilter();
+                OnPropertyChanged();
             }
         }
 
@@ -66,6 +102,7 @@ namespace Module08.ViewModel
         public ICommand RefreshGradesCommand { get; }
         public ICommand EditGradeCommand { get; }
         public ICommand DeleteGradeCommand { get; }
+        public ICommand BulkDeleteCommand { get; }
 
         public StudentDetailsViewModel()
         {
@@ -77,6 +114,7 @@ namespace Module08.ViewModel
             RefreshGradesCommand = new Command(async () => await LoadGrades());
             EditGradeCommand = new Command<Grade>(async (grade) => await EditGrade(grade));
             DeleteGradeCommand = new Command<Grade>(async (grade) => await DeleteGrade(grade));
+            BulkDeleteCommand = new Command<string>(async (criteria) => await BulkDeleteGrades(criteria));
         }
 
         private async Task GoBack()
@@ -166,6 +204,69 @@ namespace Module08.ViewModel
                 totalScore += grade.Score;
             }
             return Math.Round(totalScore / StudentGrades.Count, 2);
+        }
+
+        private void SortGrades()
+        {
+            if (StudentGrades == null) return;
+
+            var sortedGrades = _sortBy?.ToLower() switch
+            {
+                "score" => StudentGrades.OrderByDescending(g => g.Score).ToList(),
+                "quarter" => StudentGrades.OrderBy(g => g.Quarter).ToList(),
+                "subject" => StudentGrades.OrderBy(g => g.Subject).ToList(),
+                _ => StudentGrades.ToList()
+            };
+
+            StudentGrades = new ObservableCollection<Grade>(sortedGrades);
+        }
+
+        private void ApplyFilter()
+        {
+            if (string.IsNullOrEmpty(FilterBy) || string.IsNullOrEmpty(FilterValue))
+            {
+                LoadGrades();
+                return;
+            }
+
+            var filteredGrades = FilterBy?.ToLower() switch
+            {
+                "quarter" => StudentGrades.Where(g => g.Quarter.ToLower().Contains(FilterValue.ToLower())).ToList(),
+                "subject" => StudentGrades.Where(g => g.Subject.ToLower().Contains(FilterValue.ToLower())).ToList(),
+                _ => StudentGrades.ToList()
+            };
+
+            StudentGrades = new ObservableCollection<Grade>(filteredGrades);
+        }
+
+        private async Task BulkDeleteGrades(string criteria)
+        {
+            try
+            {
+                bool confirm = await Application.Current.MainPage.DisplayAlert(
+                    "Confirm Deletion",
+                    $"Delete all grades matching the criteria: {criteria}?",
+                    "Yes", "No");
+
+                if (confirm)
+                {
+                    var gradesToDelete = StudentGrades.Where(g =>
+                        criteria == "below75" ? g.Score < 75 :
+                        criteria == "below80" ? g.Score < 80 : false).ToList();
+
+                    foreach (var grade in gradesToDelete)
+                    {
+                        await _gradeService.DeleteGradeAsync(grade.GradeID);
+                    }
+
+                    await LoadGrades();
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error",
+                    $"Failed to delete grades: {ex.Message}", "OK");
+            }
         }
     }
 }
