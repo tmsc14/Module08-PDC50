@@ -24,6 +24,9 @@ namespace Module08.ViewModel
         private string _filterValue;
         private ObservableCollection<Attendance> _studentAttendance;
         private readonly AttendanceService _attendanceService;
+        private string _attendanceStats;
+        private DateTime _startDate = DateTime.Today.AddMonths(-1);
+        private DateTime _endDate = DateTime.Today;
 
         public ObservableCollection<Attendance> StudentAttendance
         {
@@ -31,6 +34,38 @@ namespace Module08.ViewModel
             set
             {
                 _studentAttendance = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string AttendanceStats
+        {
+            get => _attendanceStats;
+            set
+            {
+                _attendanceStats = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime StartDate
+        {
+            get => _startDate;
+            set
+            {
+                _startDate = value;
+                FilterAttendance();
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime EndDate
+        {
+            get => _endDate;
+            set
+            {
+                _endDate = value;
+                FilterAttendance();
                 OnPropertyChanged();
             }
         }
@@ -315,6 +350,36 @@ namespace Module08.ViewModel
                         "OK");
                 }
             }
+        }
+
+        private void CalculateAttendanceStats()
+        {
+            if (!StudentAttendance.Any())
+            {
+                AttendanceStats = "No attendance records";
+                return;
+            }
+
+            int totalDays = StudentAttendance.Count;
+            int presentDays = StudentAttendance.Count(a => a.Status == "Present");
+            decimal attendanceRate = (decimal)presentDays / totalDays * 100;
+
+            AttendanceStats = $"Attendance Rate: {Math.Round(attendanceRate, 2)}%\n" +
+                              $"Present: {presentDays}\n" +
+                              $"Total Days: {totalDays}";
+        }
+
+        private void FilterAttendance()
+        {
+            if (StudentAttendance == null) return;
+
+            var filteredAttendance = StudentAttendance
+                .Where(a => a.Date >= StartDate && a.Date <= EndDate)
+                .OrderByDescending(a => a.Date)
+                .ToList();
+
+            StudentAttendance = new ObservableCollection<Attendance>(filteredAttendance);
+            CalculateAttendanceStats();
         }
     }
 }
