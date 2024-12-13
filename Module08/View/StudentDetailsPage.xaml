@@ -281,22 +281,42 @@
                     </Grid>
 
                     <CollectionView ItemsSource="{Binding StudentAttendance}"
-                        HeightRequest="200"
-                        Margin="10,0,10,0">
+                HeightRequest="200"
+                Margin="10,0,10,0">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Grid ColumnDefinitions="*,*,*,Auto"
-                          Padding="5"
-                          ColumnSpacing="10">
+                                <Grid ColumnDefinitions="430,450,250,Auto,Auto"
+                  Padding="5"
+                  ColumnSpacing="10">
                                     <Label Text="{Binding Date, StringFormat='{0:MM/dd/yyyy}'}" 
-                               Grid.Column="0"
-                               HorizontalOptions="Start"/>
+                       Grid.Column="0"
+                       HorizontalOptions="Start"/>
                                     <Label Text="{Binding Status}" 
-                               Grid.Column="1"
-                               HorizontalOptions="Start"/>
+                       Grid.Column="1"
+                       HorizontalOptions="Start"/>
                                     <Label Text="{Binding Remarks}" 
-                               Grid.Column="2"
-                               HorizontalOptions="Start"/>
+                       Grid.Column="2"
+                       HorizontalOptions="Start"/>
+                                    <Button Text="Edit"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditAttendanceCommand}"
+                        CommandParameter="{Binding .}"
+                        BackgroundColor="#89A8B2"
+                        TextColor="#FFFFFF"
+                        FontSize="11"
+                        WidthRequest="70"
+                        HeightRequest="30"
+                        CornerRadius="5"
+                        Grid.Column="3"/>
+                                    <Button Text="Delete"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteAttendanceCommand}"
+                        CommandParameter="{Binding .}"
+                        BackgroundColor="#E5E1DA"
+                        TextColor="#1F1F1F"
+                        FontSize="11"
+                        WidthRequest="70"
+                        HeightRequest="30"
+                        CornerRadius="5"
+                        Grid.Column="4"/>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>

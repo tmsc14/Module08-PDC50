@@ -152,6 +152,8 @@ namespace Module08.ViewModel
         public ICommand DeleteGradeCommand { get; }
         public ICommand BulkDeleteCommand { get; }
         public ICommand AddAttendanceCommand { get; }
+        public ICommand EditAttendanceCommand { get; }
+        public ICommand DeleteAttendanceCommand { get; }
 
         public StudentDetailsViewModel()
         {
@@ -167,6 +169,8 @@ namespace Module08.ViewModel
             DeleteGradeCommand = new Command<Grade>(async (grade) => await DeleteGrade(grade));
             BulkDeleteCommand = new Command<string>(async (criteria) => await BulkDeleteGrades(criteria));
             AddAttendanceCommand = new Command(async () => await NavigateToAddAttendance());
+            EditAttendanceCommand = new Command<Attendance>(async (attendance) => await EditAttendance(attendance));
+            DeleteAttendanceCommand = new Command<Attendance>(async (attendance) => await DeleteAttendance(attendance));
         }
 
         private async Task GoBack()
@@ -380,6 +384,31 @@ namespace Module08.ViewModel
 
             StudentAttendance = new ObservableCollection<Attendance>(filteredAttendance);
             CalculateAttendanceStats();
+        }
+
+        private async Task EditAttendance(Attendance attendance)
+        {
+            if (attendance != null)
+            {
+                await Shell.Current.GoToAsync($"EditAttendancePage?AttendanceId={attendance.AttendanceID}");
+            }
+        }
+
+        private async Task DeleteAttendance(Attendance attendance)
+        {
+            if (attendance != null)
+            {
+                bool answer = await Application.Current.MainPage.DisplayAlert(
+                    "Confirm Delete",
+                    $"Delete attendance record for {attendance.Date:MM/dd/yyyy}?",
+                    "Yes", "No");
+
+                if (answer)
+                {
+                    await _attendanceService.DeleteAttendanceAsync(attendance.AttendanceID);
+                    await LoadAttendance();
+                }
+            }
         }
     }
 }

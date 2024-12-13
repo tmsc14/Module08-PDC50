@@ -29,5 +29,28 @@ namespace Module08.Services
             var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}add_attendance.php", attendance);
             return await response.Content.ReadAsStringAsync();
         }
+        public async Task<string> DeleteAttendanceAsync(int attendanceId)
+        {
+            var response = await _httpClient.GetAsync($"{BaseUrl}delete_attendance.php?attendanceId={attendanceId}");
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task<string> UpdateAttendanceAsync(Attendance attendance)
+        {
+            var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}edit_attendance.php", new
+            {
+                attendanceId = attendance.AttendanceID,
+                date = attendance.Date.ToString("yyyy-MM-dd"),
+                status = attendance.Status,
+                remarks = attendance.Remarks
+            });
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task<Attendance> GetAttendanceByIdAsync(int attendanceId)
+        {
+            var response = await _httpClient.GetFromJsonAsync<Attendance>($"{BaseUrl}get_attendance_by_id.php?attendanceId={attendanceId}");
+            return response;
+        }
     }
 }
