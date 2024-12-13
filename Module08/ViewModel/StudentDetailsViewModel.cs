@@ -22,6 +22,18 @@ namespace Module08.ViewModel
         private string _sortBy;
         private string _filterBy;
         private string _filterValue;
+        private ObservableCollection<Attendance> _studentAttendance;
+        private readonly AttendanceService _attendanceService;
+
+        public ObservableCollection<Attendance> StudentAttendance
+        {
+            get => _studentAttendance;
+            set
+            {
+                _studentAttendance = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Student Student
         {
@@ -31,6 +43,7 @@ namespace Module08.ViewModel
                 _student = value;
                 OnPropertyChanged();
                 LoadGrades();
+                LoadAttendance();
             }
         }
 
@@ -103,11 +116,14 @@ namespace Module08.ViewModel
         public ICommand EditGradeCommand { get; }
         public ICommand DeleteGradeCommand { get; }
         public ICommand BulkDeleteCommand { get; }
+        public ICommand AddAttendanceCommand { get; }
 
         public StudentDetailsViewModel()
         {
             _gradeService = new GradeService();
+            _attendanceService = new AttendanceService();
             StudentGrades = new ObservableCollection<Grade>();
+            StudentAttendance = new ObservableCollection<Attendance>();
 
             GoBackCommand = new Command(async () => await GoBack());
             AddGradeCommand = new Command(async () => await NavigateToAddGrade());
@@ -115,6 +131,7 @@ namespace Module08.ViewModel
             EditGradeCommand = new Command<Grade>(async (grade) => await EditGrade(grade));
             DeleteGradeCommand = new Command<Grade>(async (grade) => await DeleteGrade(grade));
             BulkDeleteCommand = new Command<string>(async (criteria) => await BulkDeleteGrades(criteria));
+            AddAttendanceCommand = new Command(async () => await NavigateToAddAttendance());
         }
 
         private async Task GoBack()
@@ -266,6 +283,37 @@ namespace Module08.ViewModel
             {
                 await Application.Current.MainPage.DisplayAlert("Error",
                     $"Failed to delete grades: {ex.Message}", "OK");
+            }
+        }
+
+        private async Task NavigateToAddAttendance()
+        {
+            if (Student != null)
+            {
+                await Shell.Current.GoToAsync("AddAttendancePage?StudentId=" + Student.StudentID);
+            }
+        }
+
+        private async Task LoadAttendance()
+        {
+            if (Student != null)
+            {
+                try
+                {
+                    var attendance = await _attendanceService.GetStudentAttendanceAsync(Student.StudentID);
+                    StudentAttendance.Clear();
+                    foreach (var record in attendance)
+                    {
+                        StudentAttendance.Add(record);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await Application.Current.MainPage.DisplayAlert(
+                        "Error",
+                        $"Failed to load attendance: {ex.Message}",
+                        "OK");
+                }
             }
         }
     }

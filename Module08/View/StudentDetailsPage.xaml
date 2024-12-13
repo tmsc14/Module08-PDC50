@@ -239,6 +239,55 @@
                 </VerticalStackLayout>
             </Frame>
 
+            <!-- Attendance Section -->
+            <Frame BorderColor="#89A8B2" Padding="20" Margin="0,20,0,0">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Attendance Records" 
+               FontSize="24" 
+               FontAttributes="Bold"
+               HorizontalOptions="Center"/>
+
+                    <Grid ColumnDefinitions="*,*,*,Auto" 
+              Padding="5"
+              ColumnSpacing="10">
+                        <Label Text="Date" Grid.Column="0" FontAttributes="Bold" HorizontalTextAlignment="Start"/>
+                        <Label Text="Status" Grid.Column="1" FontAttributes="Bold" HorizontalTextAlignment="Start"/>
+                        <Label Text="Remarks" Grid.Column="2" FontAttributes="Bold" HorizontalTextAlignment="Start"/>
+                    </Grid>
+
+                    <CollectionView ItemsSource="{Binding StudentAttendance}"
+                        HeightRequest="200"
+                        Margin="10,0,10,0">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*,*,*,Auto"
+                          Padding="5"
+                          ColumnSpacing="10">
+                                    <Label Text="{Binding Date, StringFormat='{0:MM/dd/yyyy}'}" 
+                               Grid.Column="0"
+                               HorizontalOptions="Start"/>
+                                    <Label Text="{Binding Status}" 
+                               Grid.Column="1"
+                               HorizontalOptions="Start"/>
+                                    <Label Text="{Binding Remarks}" 
+                               Grid.Column="2"
+                               HorizontalOptions="Start"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <Button Text="Add Attendance"
+                Command="{Binding AddAttendanceCommand}"
+                BackgroundColor="#89A8B2"
+                TextColor="#FFFFFF"
+                FontSize="14"
+                WidthRequest="150"
+                HeightRequest="40"
+                CornerRadius="10"/>
+                </VerticalStackLayout>
+            </Frame>
+
             <Button Text="Back to List"
                     Command="{Binding GoBackCommand}"
                     BackgroundColor="#89A8B2"

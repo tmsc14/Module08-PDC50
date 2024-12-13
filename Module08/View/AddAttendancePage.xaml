@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Module08.View.AddAttendancePage"
+             Title="Add Attendance">
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="15">
+            <DatePicker Date="{Binding Date}"
+                        Format="MM/dd/yyyy"/>
+
+            <Picker Title="Select Status"
+                    SelectedItem="{Binding Status}">
+                <Picker.Items>
+                    <x:String>Present</x:String>
+                    <x:String>Absent</x:String>
+                    <x:String>Late</x:String>
+                    <x:String>Excused</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <Entry Placeholder="Remarks"
+                   Text="{Binding Remarks}"
+                   HeightRequest="100"/>
+
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button Text="Save"
+                        Command="{Binding SaveCommand}"
+                        BackgroundColor="#89A8B2"
+                        TextColor="White"
+                        WidthRequest="100"/>
+
+                <Button Text="Cancel"
+                        Command="{Binding CancelCommand}"
+                        BackgroundColor="#E5E1DA"
+                        TextColor="#1F1F1F"
+                        WidthRequest="100"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
